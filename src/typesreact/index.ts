@@ -32,3 +32,11 @@ export interface IMsg{
     date:Date,
     read:boolean
 }
+
+export interface IGallery{
+    _id?:string
+    url:string,
+    name:string,
+    nameImage:string,
+    text?:string
+}

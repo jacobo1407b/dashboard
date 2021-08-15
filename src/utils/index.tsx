@@ -1,5 +1,6 @@
 import { menuItems } from 'typesreact';
 import Badge from '@material-ui/core/Badge'
+import { IGallery } from 'typesreact';
 
 const Mesage = () => {
     return (
@@ -8,6 +9,7 @@ const Mesage = () => {
         </Badge>
     )
 }
+
 export const itemsmenu: menuItems[] = [
     {
         id: 1,
@@ -19,30 +21,66 @@ export const itemsmenu: menuItems[] = [
         id: 2,
         to: "/profile",
         icon: <i className='bx bx-user' />,
-        title: "User"
+        title: "Perfil"
     },
     {
         id: 3,
         to: "/messages",
         icon: <Mesage />,
-        title: "Messages"
+        title: "Mensajes"
     },
     {
         id: 4,
         to: "/gallery",
         icon: <i className='bx bx-folder' />,
-        title: "Gallery"
+        title: "Galería"
     },
     {
         id: 5,
         to: "/news",
         icon: <i className='bx bx-heart' />,
-        title: "News"
-    },
-    {
-        id: 5,
-        to: "/banner",
-        icon: <i className='bx bx-cog' />,
-        title: "Setting"
+        title: "Noticias"
     }
 ]
+/*
+*/
+export const ejemploDataCarousel: IGallery[] = [
+    {
+        _id: "qwert",
+        url: "https://cdn.pixabay.com/photo/2021/08/07/06/19/houses-6527892_960_720.jpg",
+        name: "undefinen",
+        nameImage: "foto.png"
+    },
+    {
+        _id: "qwert",
+        url: "https://cdn.pixabay.com/photo/2021/08/07/06/19/houses-6527892_960_720.jpg",
+        name: "undefinen",
+        nameImage: "foto.png"
+    },
+    {
+        _id: "qwert",
+        url: "https://cdn.pixabay.com/photo/2021/08/07/06/19/houses-6527892_960_720.jpg",
+        name: "undefinen",
+        nameImage: "foto.png"
+    },
+    {
+        _id: "qwert",
+        url: "https://cdn.pixabay.com/photo/2021/08/07/06/19/houses-6527892_960_720.jpg",
+        name: "undefinen",
+        nameImage: "foto.png"
+    }
+]
+
+/**
+ * rutas
+ */
+export const mainRouter: string = "/";
+export const msgRouter: string = '/messages';
+export const banerRouter: string = "/banner";
+export const galleryRouter: string = "/gallery";
+export const newsRouter: string = "/news";
+export const profileRouter: string = "/profile";
+const senttingRouter: string = "/settings";
+export const aboutRouter: string = `${senttingRouter}/about`;
+export const featureRouter: string = `${senttingRouter}/features`;
+export const carouselRouter: string = `${senttingRouter}/carousel`

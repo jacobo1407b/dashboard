@@ -1,3 +1,5 @@
+import {useEffect} from 'react'
+import {mesgPage} from 'config/titles';
 import Table from "components/Table"
 import { IMsg } from 'typesreact'
 import Grid from '@material-ui/core/Grid';
@@ -42,7 +44,11 @@ const ejemplo: IMsg[] = [
         date: new Date(),
     }
 ];
-const Messages = () => {
+const Messages = ():JSX.Element => {
+
+    useEffect(() => {
+        document.title = mesgPage
+    }, []);
     return (
         <div>
             <Table>

@@ -1,13 +1,12 @@
-import {useEffect} from 'react'
-import {gallPage} from 'config/titles';
+import { useEffect } from 'react'
+import { caroPage } from 'config/titles';
 import Carrusel from "components/Carousel";
 import Grid from "@material-ui/core/Grid";
 import Button from "components/Button";
-
-const Gallery = ():JSX.Element => {
+const CarouselMain = (): JSX.Element => {
 
     useEffect(() => {
-        document.title = gallPage;
+        document.title = caroPage
     }, []);
     
     return (
@@ -28,4 +27,4 @@ const Gallery = ():JSX.Element => {
     )
 }
 
-export default Gallery;
+export default CarouselMain;

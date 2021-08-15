@@ -7,7 +7,7 @@ interface IMenu {
 const Menu: FunctionComponent<IMenu> = ({ children }): JSX.Element => {
 
     return (
-        <ul className="menu py-3 shadow-lg bg-base-100 rounded-box">
+        <ul className="menu py-3 shadow-lg bg-base-100 rounded-box" style={{position:"fixed"}}>
             {children}
         </ul>
     )

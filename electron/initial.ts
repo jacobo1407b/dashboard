@@ -56,7 +56,7 @@ export default class Main {
             .loadURL(
                 dev
                     ? "http://localhost:3000"
-                    : `file://${path.join(__dirname, "./index.html")}`
+                    : `file://${path.join(__dirname, "../index.html")}`
             );
         Main.mainWindow.on('closed', Main.onClose);
         Main.connectDB();

@@ -8,7 +8,8 @@ interface ITextarea {
     name?: string,
     id?: string,
     onChange?: any,
-    disabled?: boolean
+    disabled?: boolean,
+    fluid?:boolean
 
 }
 
@@ -20,7 +21,8 @@ const Textarea: FunctionComponent<ITextarea> = ({
     name,
     id,
     onChange,
-    disabled
+    disabled,
+    fluid
 }) => {
 
     return (
@@ -36,7 +38,7 @@ const Textarea: FunctionComponent<ITextarea> = ({
                 onChange={onChange}
                 id={id}
                 name={name}
-                className="textarea h-24 textarea-bordered"
+                className={`textarea h-24 textarea-bordered ${fluid && "btn-block "}`}
                 placeholder={placeholder}
                 value={value}
                 defaultValue={defaultValue}
@@ -49,3 +51,4 @@ Textarea.defaultProps = {
     disabled: false
 }
 export default Textarea
+//

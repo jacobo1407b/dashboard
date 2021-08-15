@@ -5,7 +5,7 @@ interface IAvatar{
     size?:string,
     border?:string,
     children?:string,
-    alt?:string
+    alt?:string,
 }
 const Avatar:FunctionComponent<IAvatar>=({src,size,border,children,alt}):JSX.Element=>{
     return(
@@ -21,7 +21,7 @@ const Avatar:FunctionComponent<IAvatar>=({src,size,border,children,alt}):JSX.Ele
                     `}
                      >
                          {src? (
-                             <img src={src} alt={alt}/>
+                             <img src={src} alt={alt} />
                          ):(
                             <span>{children}</span>
                          )}

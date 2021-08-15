@@ -9,7 +9,10 @@ interface IButton {
     size?:string,
     fluid?:boolean,
     round?:boolean,
-    onClick?:any
+    onClick?:any,
+    glass?:boolean,
+    info?:boolean,
+    error?:boolean
 }
 
 const Button: FunctionComponent<IButton> = ({ 
@@ -23,6 +26,9 @@ const Button: FunctionComponent<IButton> = ({
     fluid,
     round,
     onClick,
+    glass,
+    info,
+    error,
     ...rest
 }) => {
     return (
@@ -34,8 +40,11 @@ const Button: FunctionComponent<IButton> = ({
         ${primary ? "btn-primary" : ""}
         ${accent ? "btn-accent": ""}
         ${size}
-        ${fluid? "btn-block": ""}
-        ${round? "rounded-full": ""}
+        ${fluid? "btn-block ": " "}
+        ${round? "rounded-full ": " "}
+        ${glass && "glass "}
+        ${info && "btn-info "}
+        ${error && "btn-error "}
         `}
         onClick={onClick}
         {...rest}

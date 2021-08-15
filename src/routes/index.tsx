@@ -1,9 +1,15 @@
 import {Switch,Route} from 'react-router-dom'
 import Container from '@material-ui/core/Container';
+import {mainRouter,msgRouter,banerRouter} from 'utils';
+import {galleryRouter,newsRouter,profileRouter} from 'utils'
+import {aboutRouter,featureRouter,carouselRouter} from 'utils'
 import {routerType} from 'typesreact';
+import Banner from 'pages/settings/Banner';
+import About from 'pages/settings/About';
+import CarouselMain from 'pages/settings/CarouselMain';
+import Features from 'pages/settings/Features';
 import Home from "pages/Home";
 import Messages from "pages/Messages";
-import Carousel from 'pages/Carousel';
 import Gallery from 'pages/Gallery';
 import News from 'pages/News';
 import User from 'pages/User';
@@ -11,39 +17,57 @@ import User from 'pages/User';
 const routerMap: routerType[] = [
     {
         id:1,
-        path:"/",
+        path:mainRouter,
         exact:true,
         components:<Home/>
     },
     {
         id:2,
-        path:"/messages",
+        path:msgRouter,
         exact:true,
         components: <Messages/>
     },
     {
         id:3,
-        path:"/banner",
+        path:banerRouter,
         exact:true,
-        components:<Carousel/>
+        components:<Banner/>
     },
     {
         id:4,
-        path:"/gallery",
+        path:galleryRouter,
         exact:true,
         components:<Gallery/>
     },
     {
         id:5,
-        path:"/news",
+        path:newsRouter,
         exact:true,
         components:<News/>
     },
     {
         id:6,
-        path:"/profile",
+        path:profileRouter,
         exact:true,
         components:<User/>
+    },
+    {
+        id:7,
+        path:aboutRouter,
+        exact:true,
+        components:<About/>
+    },
+    {
+        id:8,
+        path:featureRouter,
+        exact:true,
+        components:<Features/>
+    },
+    {
+        id:8,
+        path:carouselRouter,
+        exact:true,
+        components:<CarouselMain/>
     },
 ]
 
