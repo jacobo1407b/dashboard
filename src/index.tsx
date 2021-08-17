@@ -4,13 +4,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from 'redux/store';
 import { Provider } from 'react-redux';
-import { AlertProvider } from 'Alert'
+import { ToastContainer } from 'react-toast'
+
 
 ReactDOM.render(
     <Provider store={store}>
-        <AlertProvider>
-            <App />
-        </AlertProvider>
+        <App />
+        <ToastContainer delay={3000} position="bottom-right" />
     </Provider>
     , document.getElementById('root'));
 

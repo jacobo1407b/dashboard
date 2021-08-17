@@ -58,6 +58,9 @@ export default class Main {
                     ? "http://localhost:3000"
                     : `file://${path.join(__dirname, "../index.html")}`
             );
+        if (dev) {
+            Main.mainWindow.webContents.openDevTools();
+        }
         Main.mainWindow.on('closed', Main.onClose);
         Main.connectDB();
     }
@@ -76,6 +79,21 @@ export default class Main {
 
     }
     //db connect
+    public static async updatePassword(id: string, password: string): Promise<boolean> {
+        try {
+            const newpassword = await encryptPassword(password);
+            await User.findByIdAndUpdate(id, {
+                password: newpassword
+            });
+            return true
+        } catch (error) {
+            return false
+        }
+    }
+
+    public static async updateEmail(id:string, email:string){
+       return await User.findByIdAndUpdate(id,{email},{new:true})
+    }
     private static async registerUser() {
         const newPassword = await encryptPassword("1234567890");
         const user = new User({
@@ -138,6 +156,12 @@ export default class Main {
                 autenticate: false
             }
         }
+    }
+    public static async updateUsername(username: string, id: string): Promise<any> {
+        return await User.findByIdAndUpdate(id, { username: username }, { new: true })
+    }
+    public static async logout(): Promise<void> {
+        session.defaultSession.cookies.remove('http://localhost', "session")
     }
     //login
     /**

@@ -1,6 +1,6 @@
 { 
     "compilerOptions": {
-      "outDir": "./publi/electron",
+      "outDir": "./public/electron",
       "sourceMap": true,
       "target": "es5",
       "module": "commonjs",

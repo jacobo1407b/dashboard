@@ -1,47 +1,55 @@
+import {FunctionComponent} from 'react'
 import { menuItems } from 'typesreact';
 import Badge from '@material-ui/core/Badge'
 import { IGallery } from 'typesreact';
 
-const Mesage = () => {
+interface Bandeja {
+    bandeja:number
+}
+const Mesage: FunctionComponent<Bandeja> = ({bandeja}) => {
+
     return (
-        <Badge badgeContent={4} color="secondary">
+        <Badge badgeContent={bandeja} color="secondary">
             <i className='bx bx-chat' />
         </Badge>
     )
 }
+export function setItems(bandeja:number):menuItems[]{
+   const itemsmenu: menuItems[] = [
+        {
+            id: 1,
+            to: "/",
+            icon: <i className='bx bx-grid-alt' />,
+            title: "Dashboard"
+        },
+        {
+            id: 2,
+            to: "/profile",
+            icon: <i className='bx bx-user' />,
+            title: "Perfil"
+        },
+        {
+            id: 3,
+            to: "/messages",
+            icon: <Mesage bandeja={bandeja} />,
+            title: "Mensajes"
+        },
+        {
+            id: 4,
+            to: "/gallery",
+            icon: <i className='bx bx-folder' />,
+            title: "Galería"
+        },
+        {
+            id: 5,
+            to: "/news",
+            icon: <i className='bx bx-heart' />,
+            title: "Noticias"
+        }
+    ]
+    return itemsmenu
+}
 
-export const itemsmenu: menuItems[] = [
-    {
-        id: 1,
-        to: "/",
-        icon: <i className='bx bx-grid-alt' />,
-        title: "Dashboard"
-    },
-    {
-        id: 2,
-        to: "/profile",
-        icon: <i className='bx bx-user' />,
-        title: "Perfil"
-    },
-    {
-        id: 3,
-        to: "/messages",
-        icon: <Mesage />,
-        title: "Mensajes"
-    },
-    {
-        id: 4,
-        to: "/gallery",
-        icon: <i className='bx bx-folder' />,
-        title: "Galería"
-    },
-    {
-        id: 5,
-        to: "/news",
-        icon: <i className='bx bx-heart' />,
-        title: "Noticias"
-    }
-]
 /*
 */
 export const ejemploDataCarousel: IGallery[] = [

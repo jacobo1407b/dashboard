@@ -40,3 +40,52 @@ export interface IGallery{
     nameImage:string,
     text?:string
 }
+
+export interface dataLogin  {
+    email:string,
+    password:string
+}
+
+export type userdata ={
+    avatar?:string | undefined,
+    logo?:string | undefined ,
+    email:string,
+    password?:string,
+    username?:string | undefined,
+    _id:string,
+    id:string
+}
+export type authenticate = {
+    user:userdata | null,
+    autenticate:boolean
+}
+
+export interface IABout {
+    _id: string,
+    url: string,
+    title: string,
+    text: string,
+    text2: string,
+    nameImage: string
+}
+
+export type AboutRequest = {
+    url?:string,
+    nameImage?:string,
+    title:string,
+    text:string,
+    text2?:string
+}
+export interface IBanner {
+    _id:string,
+    discount: string,
+    label: string,
+    title: string,
+    text: string
+}
+export type BannerRequest = {
+    discount?:string,
+    label?:string,
+    title?:string,
+    text?:string
+}

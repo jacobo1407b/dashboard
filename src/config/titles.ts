@@ -7,4 +7,5 @@ export const newsPage: string = `${basetitle}sección de noticias`;
 export const banePage: string = `${basetitle}configuración de página principal`;
 export const abouPage: string = `${basetitle}configuración información`;
 export const featPage: string = `${basetitle}configuración de servicios`;
-export const caroPage: string = `${basetitle}configurar carrusel de página principal`
+export const caroPage: string = `${basetitle}configurar carrusel de página principal`;
+export const logiPage: string = `${basetitle}Ingreso`;

@@ -5,7 +5,8 @@ const initialState: ModalState = {
     modal:{
         title:"",
         children:null,
-        open:false
+        open:false,
+        params:{}
     }
 }
 
@@ -14,7 +15,7 @@ export const modalReducer = (state: ModalState = initialState,action: ModalAccio
       case actionTypes.OPEN_MODAL:
         return {
           ...state,
-          modal: state.modal
+          modal: action.modal
         }
        default:
            return {
