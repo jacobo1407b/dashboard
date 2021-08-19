@@ -1,20 +1,15 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from 'bcryptjs';
-
-interface  IUser {
-    email:string,
-    password:string,
-    username?:string,
-    logo?:string,
-    avatar?:string
-}
+import {IUser} from '../types'
 
 const userSchema = new Schema<IUser>({
     email:{type:String},
     password:{type:String},
     username:{type:String,defaultValue:"user"},
     logo:{type:String,defaultValue:""},
-    avatar:{type:String,defaultValue:""}
+    avatar:{type:String,defaultValue:""},
+    nameavatar:{type:String,defaultValue:""},
+    namelogo:{type:String,defaultValue:""}
 });
 
 userSchema.methods.encryptPassword = async (password:string) => {

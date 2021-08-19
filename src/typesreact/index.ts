@@ -47,6 +47,8 @@ export interface dataLogin  {
 }
 
 export type userdata ={
+    nameavatar?:string,
+    namelogo?:string,
     avatar?:string | undefined,
     logo?:string | undefined ,
     email:string,

@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { userPage } from 'config/titles';
+import { useDropzone } from 'react-dropzone'
 import { useSelector, useDispatch } from 'react-redux';
 import { userInitial } from 'redux/accion/actionCreators'
 import { updateUsername } from 'api'
 import { toast } from "react-toast"
 import { updateEmail as actualizarEmail, updatePassword } from 'api'
+import { updateAvatar, updateLogo } from 'api'
 import CachedIcon from '@material-ui/icons/Cached';
+import Imgloader from 'assets/loader.gif'
 import Card from "components/Card"
 import Input from "components/Input"
 import Grid from '@material-ui/core/Grid';
@@ -21,10 +24,83 @@ const User = (): JSX.Element => {
     const [loadEmail, setLoadEmail] = useState<boolean>(false);
     const [loadPassword, setloadPassword] = useState<boolean>(false)
     const [formUser, setFormUser] = useState(user.user);
+    const [loadingLogo, setLoadingLogo] = useState<boolean>(false)
+    const [loadingAvatar, setLoadingAvatar] = useState<boolean>(false)
 
     useEffect(() => {
         document.title = userPage
     }, []);
+
+    const onDropAvatar = useCallback(acceptedFiles => {
+        let fileReader = new FileReader();
+        const file = acceptedFiles[0];
+        fileReader.readAsDataURL(file)
+        fileReader.onload = function () {
+            setLoadingAvatar(true)
+            updateAvatar(formUser._id, formUser.nameavatar, fileReader.result).then((res) => {
+                dispatch(userInitial({
+                    autenticate: true,
+                    user: {
+                        _id: res.id,
+                        email: res.email,
+                        username: res.username,
+                        logo: res.logo,
+                        avatar: res.avatar,
+                        nameavatar: res.nameavatar,
+                        namelogo: res.namelogo
+                    }
+                }))
+                setFormUser({
+                    ...formUser,
+                    avatar: res.avatar,
+                })
+                setLoadingAvatar(false)
+                toast('Imagen actualizada')
+            })
+        };
+    }, [formUser, dispatch])
+
+    const onDropLogo = useCallback(acceptedFiles => {
+
+        let fileReader = new FileReader();
+        const file = acceptedFiles[0];
+        fileReader.readAsDataURL(file)
+        fileReader.onload = function () {
+            setLoadingLogo(true)
+            updateLogo(formUser._id, formUser.namelogo, fileReader.result).then((res) => {
+                dispatch(userInitial({
+                    autenticate: true,
+                    user: {
+                        _id: res.id,
+                        email: res.email,
+                        username: res.username,
+                        logo: res.logo,
+                        avatar: res.avatar,
+                        nameavatar: res.nameavatar,
+                        namelogo: res.namelogo
+                    }
+                }))
+                setFormUser({
+                    ...formUser,
+                    logo: res.logo,
+                })
+                setLoadingLogo(false)
+                toast('Logo actualizado')
+            })
+        };
+    }, [formUser, dispatch])
+
+    const logoprops = useDropzone({
+        accept: "image/jpeg, image/png, image/svg+xml",
+        noKeyboard: true,
+        onDrop: onDropLogo,
+    });
+
+    const avatarprops = useDropzone({
+        accept: "image/jpeg, image/png",
+        noKeyboard: true,
+        onDrop: onDropAvatar,
+    });
 
 
     function handlerChange(e: any) {
@@ -59,9 +135,9 @@ const User = (): JSX.Element => {
             setloadPassword(true)
             updatePassword(formUser._id, formUser.password).then((res) => {
                 setloadPassword(false)
-                if(res){
+                if (res) {
                     toast('Contraseña actualizada')
-                }else{
+                } else {
                     toast.error('Error al actualizar contraseña')
                 }
             })
@@ -73,7 +149,6 @@ const User = (): JSX.Element => {
         } else {
             setLoadEmail(true)
             actualizarEmail(formUser._id, formUser.email).then((res) => {
-                console.log(user)
                 setLoadEmail(false);
 
                 dispatch(userInitial({
@@ -83,7 +158,9 @@ const User = (): JSX.Element => {
                         email: res.email,
                         username: res.username,
                         logo: res.logo,
-                        avatar: res.avatar
+                        avatar: res.avatar,
+                        nameavatar: res.nameavatar,
+                        namelogo: res.namelogo
                     }
                 }))
                 toast.success('Correo actualizado')
@@ -96,9 +173,12 @@ const User = (): JSX.Element => {
                 <Grid container spacing={2}>
                     <Grid item xs={2}>
                         <Avatar
-                            src={formUser.avatar ? formUser.avatar : "http://daisyui.com/tailwind-css-component-profile-1@94w.png"}
+                            {...avatarprops.getRootProps()}
+                            src={loadingAvatar ? Imgloader : formUser.avatar}
+                            alt={formUser.nameavatar}
                             size="large"
                         />
+                        <input {...avatarprops.getInputProps()} />
                     </Grid>
                     <Grid item xs={10}>
                         <Input
@@ -131,9 +211,12 @@ const User = (): JSX.Element => {
                 <Grid container spacing={2}>
                     <Grid item xs={2}>
                         <Avatar
-                            src={formUser.logo ? formUser.logo : "http://daisyui.com/tailwind-css-component-profile-1@94w.png"}
+                            {...logoprops.getRootProps()}
+                            src={loadingLogo ? Imgloader : formUser.logo}
+                            alt={formUser.namelogo}
                             size="large"
                         />
+                        <input {...logoprops.getInputProps()} />
                     </Grid>
                     <Grid item xs={10}>
                         <Input

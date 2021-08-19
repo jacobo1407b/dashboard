@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.click-about:hover{
+  cursor: pointer;
+}
 body{
   background-color: #2a2e37;
   height: 100vh;

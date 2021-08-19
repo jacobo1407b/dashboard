@@ -18,6 +18,8 @@ export type ModalAccion = {
 export type DispatchModal = (args: ModalAccion) => ModalAccion
 //auth
 interface userdata {
+    nameavatar?:string,
+    namelogo?:string,
     email: string,
     password?: string,
     username?: string | undefined,
@@ -88,7 +90,8 @@ export interface ICarousel {
     title: string,
     name: string,
     nameImages: string,
-    text?:string
+    text?:string,
+    key?:number
 }
 
 export type CaouselState = {

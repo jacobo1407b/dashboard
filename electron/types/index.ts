@@ -95,3 +95,14 @@ export type socialReq = {
     icon:string,
     link:string
 }
+
+
+export interface  IUser {
+    email:string,
+    password:string,
+    username?:string,
+    logo?:string,
+    avatar?:string,
+    nameavatar?:string,
+    namelogo?:string
+}

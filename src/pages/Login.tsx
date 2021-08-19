@@ -47,7 +47,9 @@ const Login = (): JSX.Element => {
                             username: res.user?.username,
                             _id: res.user?.id,
                             logo: res.user?.logo,
-                            avatar: res.user?.avatar
+                            avatar: res.user?.avatar,
+                            namelogo: res.user?.namelogo,
+                            nameavatar: res.user?.nameavatar
                         }
                     }))
                     toast('Login successfully')

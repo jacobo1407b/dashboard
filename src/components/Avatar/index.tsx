@@ -6,18 +6,33 @@ interface IAvatar{
     border?:string,
     children?:string,
     alt?:string,
+    sizeNumber?:number,
+    className?:string,
+    onClick?:any
+    extra?:any
 }
-const Avatar:FunctionComponent<IAvatar>=({src,size,border,children,alt}):JSX.Element=>{
+const Avatar:FunctionComponent<IAvatar>=({
+    onClick,
+    sizeNumber,
+    src,
+    size,
+    border,
+    extra,
+    children,
+    alt,
+    className
+}):JSX.Element=>{
     return(
-        <div>
+        <div {...extra} className={className} onClick={onClick}>
             <div className="avatar">
                     <div 
                     className={`
-                    ${size=== "large" && "w-24 h-24"}
-                    ${!size && "w-14 h-14"}
-                    ${size === "tiny" && "w-10 h-10"}
-                    ${border === "full" && "rounded-full"}
-                    ${border === "btn" && "rounded-btn"}
+                    ${size=== "large " && `w-${sizeNumber} h-${sizeNumber} `}
+                    ${!size && "w-14 h-14 "}
+                    ${size === "tiny" && "w-10 h-10 "}
+                    ${border === "full" && "rounded-full "}
+                    ${border === "btn" && "rounded-btn "} 
+                    
                     `}
                      >
                          {src? (
@@ -32,7 +47,8 @@ const Avatar:FunctionComponent<IAvatar>=({src,size,border,children,alt}):JSX.Ele
     )
 }
 Avatar.defaultProps={
-    border:"full"
+    border:"full",
+    sizeNumber:24
 }
 export default Avatar;
 

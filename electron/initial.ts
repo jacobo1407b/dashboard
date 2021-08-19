@@ -2,6 +2,8 @@ import { BrowserWindow, session, dialog } from 'electron';
 import * as dev from 'electron-is-dev';
 import * as path from 'path'
 import * as chalck from 'chalk';
+import { v2 as cloudinary } from 'cloudinary'
+import { v4 as uuidv4 } from 'uuid';
 import User from './models/User';
 import About from './models/About'
 import Banner from './models/Banner';
@@ -13,28 +15,46 @@ import Social from './models/Social';
 import { connect } from 'mongoose';
 import { idAbout, idBanner } from './utils/constantes';
 import { encryptPassword, matchPassword } from './utils/hash';
-import { Cookie, IABout, AboutRequest, IBanner, BannerRequest, ICarousel } from './types'
+import { Cookie, IABout, AboutRequest, IBanner, BannerRequest, ICarousel, IUser } from './types'
 import { CarouselReq, IFeature, IMsg, MsgReq, NewReq, INews, ISocial, socialReq } from './types'
+
+
 
 export default class Main {
     private static url: string = "";
-
+    private static cloudStorage = cloudinary
     static mainWindow: Electron.BrowserWindow;
     static application: Electron.App;
     static BrowserWindow;
 
+    private static setCloudinary() {
+        Main.cloudStorage.config({
+            cloud_name: process.env.CLOUDINARY_NAME,
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_API_SECRET
+        })
+    }
     private static onWindowAllClosed() {
         if (process.platform !== 'darwin') {
             Main.application.quit();
         }
     }
-
+    private static onCloudinary() {
+        if (process.env.CLOUDINARY_NAME) {
+            Main.setCloudinary();
+            console.log(chalck.blue('INFO: ') + chalck.green(`cloudinary config loaded successfuly a cloud ${process.env.CLOUDINARY_NAME}`))
+        } else {
+            console.log(chalck.red('ERROR: ' + chalck.redBright('No configuration credentials found')))
+        }
+    }
     private static onClose() {
         // Dereference the window object. 
         Main.mainWindow = null;
     }
 
     private static onReady() {
+        require('dotenv').config()
+        Main.url = process.env.urldatabase;
         Main.mainWindow = new Main.BrowserWindow({
             width: 1270,
             height: 690,
@@ -61,6 +81,7 @@ export default class Main {
         if (dev) {
             Main.mainWindow.webContents.openDevTools();
         }
+        Main.onCloudinary();
         Main.mainWindow.on('closed', Main.onClose);
         Main.connectDB();
     }
@@ -79,6 +100,21 @@ export default class Main {
 
     }
     //db connect
+    public static async actualizaLogo(id: string, name: string, base64: string | null): Promise<IUser> {
+        const uploader = await Main.cloudStorage.uploader.upload(base64, { public_id: `user/${name}` });
+        var urllogo = uploader.secure_url;
+        const result: IUser = await User.findByIdAndUpdate(id, { logo: urllogo }, { new: true });
+        return result;
+    }
+
+    public static async actualizarAvatar(id: string, name: string, base64: string | null): Promise<IUser> {
+        const uploader = await Main.cloudStorage.uploader.upload(base64, { public_id: `user/${name}` });
+        var avatarlogo = uploader.secure_url;
+        const result: IUser = await User.findByIdAndUpdate(id, { avatar: avatarlogo }, { new: true });
+        return result;
+    }
+
+
     public static async updatePassword(id: string, password: string): Promise<boolean> {
         try {
             const newpassword = await encryptPassword(password);
@@ -91,15 +127,18 @@ export default class Main {
         }
     }
 
-    public static async updateEmail(id:string, email:string){
-       return await User.findByIdAndUpdate(id,{email},{new:true})
+    public static async updateEmail(id: string, email: string) {
+        return await User.findByIdAndUpdate(id, { email }, { new: true })
     }
     private static async registerUser() {
         const newPassword = await encryptPassword("1234567890");
         const user = new User({
             email: "test@test.com",
             password: newPassword,
-            username: "undefined"
+            logo: "https://res.cloudinary.com/artemanosingenio/image/upload/v1629333316/user/Logo_zfyza1.jpg",
+            namelogo: "Logo_zfyza1",
+            avatar: "https://res.cloudinary.com/artemanosingenio/image/upload/v1629333806/user/login-bg_kdp3fn.jpg",
+            nameavatar: "login-bg_kdp3fn"
         });
         var result = await user.save();
         console.log(result)
@@ -172,7 +211,11 @@ export default class Main {
         return about
     }
 
-    public static async editAbout(request: AboutRequest): Promise<IABout> {
+    public static async editAbout(request: AboutRequest, base64?: string | null): Promise<IABout> {
+        if (base64) {
+            const re = await Main.cloudStorage.uploader.upload(base64, { public_id: `about/${request.nameImage}` });
+            request.url = re.secure_url;
+        }
         const update = await About.findByIdAndUpdate(idAbout, request, { new: true });
         return update
     }
@@ -197,18 +240,36 @@ export default class Main {
         return carousels
     }
 
-    public static async editCarousel(id: string, data: CarouselReq): Promise<ICarousel> {
+    public static async editCarousel(id: string, data: CarouselReq, base64?: string | null): Promise<ICarousel> {
+        if (base64) {
+            const re = await Main.cloudStorage.uploader.upload(base64, { public_id: data.nameImages });
+            data.url = re.secure_url;
+        }
         const update: ICarousel = await Carousel.findByIdAndUpdate(id, data, { new: true });
         return update;
     }
 
-    public static async deleteCarousel(id: string): Promise<boolean> {
-        await Carousel.findByIdAndDelete(id);
-        return true;
+    public static async deleteCarousel(id: string, name: string): Promise<boolean> {
+        try {
+            await Main.cloudStorage.uploader.destroy(name)
+            await Carousel.findByIdAndDelete(id);
+            return true;
+        } catch (error) {
+            return false
+        }
+
     }
 
-    public static async postCarousel(data: CarouselReq): Promise<ICarousel> {
-        const addCarousel = new Carousel(data);
+    public static async postCarousel(title: string, base64: string): Promise<ICarousel> {
+        var nameImage = uuidv4();
+        const upload = await Main.cloudStorage.uploader.upload(base64, { public_id: nameImage })
+        const addCarousel = new Carousel({
+            title,
+            url: upload.secure_url,
+            nameImages: nameImage,
+            name: nameImage
+        });
+
         const carousel: ICarousel = await addCarousel.save();
         return carousel;
     }

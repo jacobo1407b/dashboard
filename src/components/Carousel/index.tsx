@@ -11,15 +11,22 @@ import EditIcon from '@material-ui/icons/Edit';
 
 interface ICarouselComponent {
     arrayCarousel: ICarousel[],
-    componente: JSX.Element
+    componente: JSX.Element,
+    deleteComponent:JSX.Element
 }
-const Carrusel: FunctionComponent<ICarouselComponent> = ({ arrayCarousel,componente}): JSX.Element => {
+const Carrusel: FunctionComponent<ICarouselComponent> = ({deleteComponent, arrayCarousel,componente,}): JSX.Element => {
 
     const dispatch = useDispatch();
 
 
-    function eliminar(i: number) {
-        console.log('eliminar ' + i)
+    function eliminar(i: number,name:string,id:string) {
+        var params = {key:i,name,id}
+        dispatch(openModal({
+            open:true,
+            title:"Eliminar información",
+            children:deleteComponent,
+            params
+        }))
     }
 
     function editar(i: number,params:any) {
@@ -36,10 +43,10 @@ const Carrusel: FunctionComponent<ICarouselComponent> = ({ arrayCarousel,compone
             {arrayCarousel.map((value, i) => (
                 <div key={value._id} >
                     <img src={value.url} style={{ backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat", height: "40%", width: "50%" }} className="images-carrusel" alt={value.nameImages} />
-                    <p className="legend">{value.name ? value.name : value.text}</p>
+                    <p className="legend">{value.title ? value.title : value.text}</p>
                     <IconButton
                         color="inherit"
-                        onClick={() => eliminar(i)}
+                        onClick={() => eliminar(i,value.nameImages,value._id)}
                     >
                         <Badge color="secondary"
                         >

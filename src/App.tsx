@@ -18,7 +18,11 @@ function App(): JSX.Element {
         const user = {
           email: response.user?.email,
           username: response.user?.username,
-          _id: response.user?._id
+          _id: response.user?._id,
+          logo:response.user?.logo,
+          avatar:response.user?.avatar,
+          namelogo:response.user?.namelogo,
+          nameavatar:response.user?.nameavatar
         }
         const data:any = {
           autenticate:response.autenticate,
