@@ -118,3 +118,19 @@ export type NewsAccion = {
     type: string,
     news: INews[]
 }
+//gallery
+export interface IGallery{
+    _id?:string,
+    id?:string
+    url:string,
+    name:string,
+    nameImage:string
+}
+
+export type GalleryState={
+    gallery:IGallery[];
+}
+export type GalleryAccion={
+    type:string,
+    gallery:IGallery[]
+}

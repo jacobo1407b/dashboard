@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { counMessages, getBanner, getABout,getCarousel } from 'api'
-import { getFeature,getNews } from 'api';
+import { getFeature,getNews,getGallery } from 'api';
 import { useDispatch } from 'react-redux';
-import {IFeature,ICarousel,INews} from 'redux/myTypes'
-import { bannerStorage, aboutStorage,featureStorage,newsStorage } from 'redux/accion/actionCreators'
+import {IFeature,ICarousel,INews,IGallery} from 'redux/myTypes'
+import { bannerStorage, aboutStorage,featureStorage,newsStorage,galleryStorage} from 'redux/accion/actionCreators'
 import {carouselStorage} from 'redux/accion/actionCreators'
 import MenuLeft from "components/Menuleft"
 import Button from "components/Button"
@@ -63,6 +63,19 @@ const Layout = (): JSX.Element => {
                 return arraynews
             })
             dispatch(newsStorage(arraynews));
+        })()
+    }, [dispatch]);
+
+    useEffect(() => {
+        (async()=>{
+            const arraygallery: IGallery[] = [];
+            const gallery = await getGallery()
+            gallery.map((val)=>{
+                const {id,url,name,nameImage} = val;
+                arraygallery.push({_id:id,url,name,nameImage});
+                return arraygallery
+            })
+            dispatch(galleryStorage(arraygallery));
         })()
     }, [dispatch]);
 

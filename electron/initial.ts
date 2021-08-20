@@ -12,12 +12,13 @@ import Feature from './models/Features';
 import Message from './models/Message';
 import News from './models/News';
 import Social from './models/Social';
+import Gallery from './models/Gallery';
 import { connect } from 'mongoose';
 import { idAbout, idBanner } from './utils/constantes';
 import { encryptPassword, matchPassword } from './utils/hash';
 import { Cookie, IABout, AboutRequest, IBanner, BannerRequest, ICarousel, IUser } from './types'
 import { CarouselReq, IFeature, IMsg, MsgReq, NewReq, INews, ISocial, socialReq } from './types'
-
+import {IGallery} from './types'
 
 
 export default class Main {
@@ -332,6 +333,38 @@ export default class Main {
     public static async deleteNew(id: string): Promise<boolean> {
         await News.findByIdAndDelete(id);
         return true;
+    }
+    /**
+     * Gallery
+     */
+    public static async getGallery(): Promise<IGallery[]>{
+        const result: IGallery[] = await Gallery.find();
+        return result
+    }
+
+    public static async editGallery(id:string,data:{url:string,name:string,nameImage:string},base64:string | null): Promise<IGallery>{
+        if(base64){
+            const result = await Main.cloudStorage.uploader.upload(base64,{ public_id:`gallery/${data.nameImage}`});
+            data.url = result.secure_url;
+        }
+       return await Gallery.findByIdAndUpdate(id,data,{new:true});
+    }
+
+    public static async addGallery(name:string,base64:string | null): Promise<IGallery>{
+        const nameImageUploader = uuidv4();
+        const result = await Main.cloudStorage.uploader.upload(base64,{public_id:`gallery/${nameImageUploader}`})
+        const gallery = new Gallery({
+            name,
+            nameImage:nameImageUploader,
+            url:result.secure_url
+        });
+        return await gallery.save();
+    }
+
+    public static async deleteGallery(id:string,nameImage:string):  Promise<boolean>{
+        await Main.cloudStorage.uploader.destroy(`gallery/${nameImage}`);
+        await Gallery.findByIdAndDelete(id);
+        return true
     }
     /**
      * social

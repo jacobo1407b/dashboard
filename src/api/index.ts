@@ -1,7 +1,8 @@
 import { authenticate, userdata } from 'typesreact'
-import { IFeature, ICarousel,INews } from 'redux/myTypes';
+import { IFeature, ICarousel, INews } from 'redux/myTypes';
 //types
 import { IABout, AboutRequest, IBanner, BannerRequest } from 'typesreact'
+import { IGallery } from 'redux/myTypes';
 const main = window.require("electron").remote;
 const ma = main.require("./initial");
 
@@ -23,11 +24,11 @@ export async function logiut(): Promise<void> {
     await ma.default.logout();
 }
 //user
-export async function updateLogo(id: string, name: string, base64: string|ArrayBuffer|null): Promise<userdata>{
-    return ma.default.actualizaLogo(id,name,base64)
+export async function updateLogo(id: string, name: string, base64: string | ArrayBuffer | null): Promise<userdata> {
+    return ma.default.actualizaLogo(id, name, base64)
 }
-export async function updateAvatar(id: string, name: string, base64: string|ArrayBuffer|null): Promise<userdata> {
-    return await ma.default.actualizarAvatar(id,name,base64)
+export async function updateAvatar(id: string, name: string, base64: string | ArrayBuffer | null): Promise<userdata> {
+    return await ma.default.actualizarAvatar(id, name, base64)
 }
 export async function updateUsername(username: string, id: string): Promise<userdata> {
     return await ma.default.updateUsername(username, id);
@@ -44,8 +45,8 @@ export async function getABout(): Promise<IABout> {
     return await ma.default.getAbout()
 }
 
-export async function editAbout(params: AboutRequest,base64?:string|ArrayBuffer|null): Promise<IABout> {
-    return await ma.default.editAbout(params,base64);
+export async function editAbout(params: AboutRequest, base64?: string | ArrayBuffer | null): Promise<IABout> {
+    return await ma.default.editAbout(params, base64);
 }
 
 /** Banner **/
@@ -84,23 +85,48 @@ export async function deleteCarousel(id: string, name: string): Promise<boolean>
     return await ma.default.deleteCarousel(id, name)
 }
 /** News **/
-export async function getNews(): Promise<INews[]>{
+export async function getNews(): Promise<INews[]> {
     return await ma.default.getNews();
 }
 interface addnews {
-    title:string,
-    excerpt:string
+    title: string,
+    excerpt: string
 }
-export async function postNew(data: addnews): Promise<INews>{
+export async function postNew(data: addnews): Promise<INews> {
     return await ma.default.postNew(data)
 }
 
-export async function editNew(data:INews,id:string): Promise<INews>{
-    return await ma.default.editNew(data,id)
+export async function editNew(data: INews, id: string): Promise<INews> {
+    return await ma.default.editNew(data, id)
 }
 
-export async function deleteNew(id?: string): Promise<boolean>{
+export async function deleteNew(id?: string): Promise<boolean> {
     return await ma.default.deleteNew(id)
+}
+
+/**
+ * Gallery
+ * @type IGallery[]
+ */
+
+export async function getGallery(): Promise<IGallery[]> {
+    return await ma.default.getGallery();
+}
+export async function deleteGallery(id: string, nameimg: string): Promise<boolean> {
+    return await ma.default.deleteGallery(id, nameimg);
+}
+export async function editGallery(
+    id: string,
+    data: { url: string, name: string, nameImage: string },
+    base64: string | ArrayBuffer | null): Promise<IGallery> {
+    return await ma.default.editGallery(id, data, base64)
+}
+
+export async function addGallery(
+    name: string,
+    base64: string | ArrayBuffer | null):
+    Promise<IGallery> {
+    return await ma.default.addGallery(name, base64)
 }
 /** msg **/
 
