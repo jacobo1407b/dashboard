@@ -1,63 +1,98 @@
-import { useState,useEffect } from 'react'
-import {newsPage} from 'config/titles';
+import { useState, useEffect } from 'react'
+import { newsPage } from 'config/titles';
+import { useSelector, useDispatch } from 'react-redux';
+import { openModal } from 'redux/accion/actionCreators'
+import { INews } from 'redux/myTypes';
+import AddIcon from '@material-ui/icons/Add';
+import AddNews from 'Custom/AddNews';
+import EditNews from 'Custom/EditNews';
+import DeleteNews from 'Custom/DeleteNews';
 import Grid from '@material-ui/core/Grid';
 import ImageNews from 'assets/new-image.png'
 import Button from 'components/Button';
 
-const itemEjemplo = [
-    {
-        id:1,
-        title:"titulo 1",
-        text:"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum ex eveniet consectetur nisi odit officia ea expedita voluptas, dolorem beatae hic atque nemo voluptate eum sapiente quas eaque praesentium porro?"
-    },
-    {
-        id:2,
-        title:"titulo 2",
-        text:"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum ex eveniet consectetur nisi odit officia ea expedita voluptas, dolorem beatae hic atque nemo voluptate eum sapiente quas eaque praesentium porro?"
-    },
-    {
-        id:3,
-        title:"titulo 3",
-        text:"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum ex eveniet consectetur nisi odit officia ea expedita voluptas, dolorem beatae hic atque nemo voluptate eum sapiente quas eaque praesentium porro?"
-    },
-    {
-        id:4,
-        title:"titulo 4",
-        text:"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum ex eveniet consectetur nisi odit officia ea expedita voluptas, dolorem beatae hic atque nemo voluptate eum sapiente quas eaque praesentium porro?"
-    }
-]
 
 const News = (): JSX.Element => {
+    const dispatch = useDispatch()
+    const newsReduce: any = useSelector<any>(state => state.newsReducer)
+    const [news, setLength] = useState<number>(newsReduce?.news?.length);
+    const [newsArray] = useState<INews[]>(newsReduce.news)
 
     useEffect(() => {
         document.title = newsPage
     }, []);
 
-    const [news] = useState<boolean>(false);
+    /*console.log(newsReduce?.news?.length)
+    console.log(news)*/
+    function onEdit(value: INews, keyId: number) {
+        const { _id, title, excerpt } = value
+        dispatch(openModal({
+            open: true,
+            title: "",
+            children: <EditNews _id={_id} title={title} excerpt={excerpt} keyId={keyId} arregloNews={newsArray} />
+        }))
+    }
+
+    function onDelete(id: string | undefined, key: number) {
+        dispatch(openModal({
+            open: true,
+            title: "",
+            children: <DeleteNews 
+            id={id} 
+            keyId={key} 
+            setLength={setLength}
+            newsArray2={newsArray} 
+            />
+        }))
+    }
+
+    function agregarNoticia() {
+        dispatch(openModal({
+            open: true,
+            title: "",
+            children: <AddNews setLength={setLength} />
+        }))
+    }
     return (
         <div>
-            {news ? (
+            <Button
+                round
+                disabled={news === 4 ? true : false}
+                primary
+                onClick={agregarNoticia}
+            >
+                <AddIcon />
+            </Button>
+            {news > 0 ? (
                 <Grid container spacing={2}>
-                    {itemEjemplo.map((values)=>(
-                        <Grid item xs={6} key={values.id}>
-                        <div className="flex items-center w-full px-2 py-1 bg-cover card bg-base-200" >
-                            <div className="card glass lg:card-side text-neutral-content">
-                                <div className="max-w-md card-body">
-                                    <h2 className="card-title">{values.title}</h2>
-                                    <p>{values.text}</p>
-                                    <div className="card-actions">
-                                        <Button info round>
-                                           Editar
-                                        </Button>
-                                        <Button error round>
-                                            Eliminar
-                                        </Button>
+                    {newsArray.map((values, i) => (
+                        <Grid item xs={6} key={values._id}>
+                            <div className="flex items-center w-full px-2 py-1 bg-cover card bg-base-200" >
+                                <div className="card glass lg:card-side text-neutral-content">
+                                    <div className="max-w-md card-body">
+                                        <h2 className="card-title">{values.title}</h2>
+                                        <p>{values.excerpt}</p>
+                                        <div className="card-actions">
+                                            <Button
+                                                info
+                                                round
+                                                onClick={() => onEdit(values, i)}
+                                            >
+                                                Editar
+                                            </Button>
+                                            <Button
+                                                error
+                                                onClick={() => onDelete(values._id, i)}
+                                                round
+                                            >
+                                                Eliminar
+                                            </Button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        </Grid> 
-                    ))}                  
+                        </Grid>
+                    ))}
                 </Grid>
             ) : (
                 <Grid spacing={2}>
@@ -71,7 +106,11 @@ const News = (): JSX.Element => {
                                 <h2 className="card-title">Sección de noticias</h2>
                                 <p>¡Aún no hay noticias agregadas !, presione el siguiente botón para agregar una nueva noticia a su sitio web</p>
                                 <div className="card-actions">
-                                    <Button glass round>
+                                    <Button
+                                        onClick={agregarNoticia}
+                                        glass
+                                        round
+                                    >
                                         Agregar noticia
                                     </Button>
                                 </div>

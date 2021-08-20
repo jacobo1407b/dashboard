@@ -12,10 +12,12 @@ interface IButton {
     onClick?:any,
     glass?:boolean,
     info?:boolean,
-    error?:boolean
+    error?:boolean,
+    disabled?:boolean
 }
 
 const Button: FunctionComponent<IButton> = ({ 
+    disabled,
     children, 
     loading, 
     active,
@@ -33,6 +35,7 @@ const Button: FunctionComponent<IButton> = ({
 }) => {
     return (
         <button
+        disabled={disabled}
         className={`btn 
         ${loading?'loading':null}
         ${!active? "":"btn-active"}
@@ -56,7 +59,8 @@ const Button: FunctionComponent<IButton> = ({
 
 Button.defaultProps = {
     active:true,
-    size:""
+    size:"",
+    disabled:false
 };
 export default Button;
 

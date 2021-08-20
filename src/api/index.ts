@@ -1,5 +1,5 @@
 import { authenticate, userdata } from 'typesreact'
-import { IFeature, ICarousel } from 'redux/myTypes';
+import { IFeature, ICarousel,INews } from 'redux/myTypes';
 //types
 import { IABout, AboutRequest, IBanner, BannerRequest } from 'typesreact'
 const main = window.require("electron").remote;
@@ -82,6 +82,25 @@ export async function addCarousel(title: string, base64: string | ArrayBuffer | 
 
 export async function deleteCarousel(id: string, name: string): Promise<boolean> {
     return await ma.default.deleteCarousel(id, name)
+}
+/** News **/
+export async function getNews(): Promise<INews[]>{
+    return await ma.default.getNews();
+}
+interface addnews {
+    title:string,
+    excerpt:string
+}
+export async function postNew(data: addnews): Promise<INews>{
+    return await ma.default.postNew(data)
+}
+
+export async function editNew(data:INews,id:string): Promise<INews>{
+    return await ma.default.editNew(data,id)
+}
+
+export async function deleteNew(id?: string): Promise<boolean>{
+    return await ma.default.deleteNew(id)
 }
 /** msg **/
 

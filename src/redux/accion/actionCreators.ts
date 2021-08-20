@@ -1,7 +1,7 @@
 import * as actionTypes from '../acctionType';
 import { IModal, ModalAccion, UserAccion,IUser, IFeature, FeatureAccion} from '../myTypes';
 import {IBanner,BannerAccion,IABout,AboutAccion} from '../myTypes'
-import {ICarousel, CarouselAccion} from '../myTypes'
+import {ICarousel, CarouselAccion,INews,NewsAccion} from '../myTypes'
 export function openModal(modal: IModal): ModalAccion {
     const action: ModalAccion = {
         type: actionTypes.OPEN_MODAL,
@@ -49,5 +49,13 @@ export function carouselStorage(carousel:ICarousel[]): CarouselAccion{
         carousel
     }
 
+    return action
+}
+
+export function newsStorage (news:INews[]): NewsAccion{
+    const action: NewsAccion = {
+        type:actionTypes.SET_NEWS,
+        news
+    }
     return action
 }

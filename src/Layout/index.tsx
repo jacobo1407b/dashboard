@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { counMessages, getBanner, getABout,getCarousel } from 'api'
-import { getFeature } from 'api';
+import { getFeature,getNews } from 'api';
 import { useDispatch } from 'react-redux';
-import {IFeature,ICarousel} from 'redux/myTypes'
-import { bannerStorage, aboutStorage,featureStorage } from 'redux/accion/actionCreators'
+import {IFeature,ICarousel,INews} from 'redux/myTypes'
+import { bannerStorage, aboutStorage,featureStorage,newsStorage } from 'redux/accion/actionCreators'
 import {carouselStorage} from 'redux/accion/actionCreators'
 import MenuLeft from "components/Menuleft"
 import Button from "components/Button"
@@ -52,11 +52,25 @@ const Layout = (): JSX.Element => {
            dispatch(carouselStorage(arrayCarousel))
         })()
     }, [dispatch]);
+
+    useEffect(() => {
+        (async()=>{
+            const arraynews: INews[] = [];
+            const news = await getNews();
+            news.map((values)=>{
+                const {id,title,excerpt} = values
+                arraynews.push({_id:id,title,excerpt});
+                return arraynews
+            })
+            dispatch(newsStorage(arraynews));
+        })()
+    }, [dispatch]);
+
     return (
         <div>
             <MenuLeft bandeja={bandeja} />
             <div style={{ position: "fixed", right: "160px", zIndex: 4000, paddingTop: "5px" }}>
-                <Button round onClick={() => setOpen(!open)}>
+                <Button primary round onClick={() => setOpen(!open)}>
                     <i className='bx bx-cog' />
                 </Button>
                 {open && (<MenuCustom setOpen={setOpen} />)}
@@ -74,6 +88,6 @@ export default Layout
                 <div className="text">
                     <Routes />
                 </div>
-            </section>
+            </section>newsReducer
 
  */

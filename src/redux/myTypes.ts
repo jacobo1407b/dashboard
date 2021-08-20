@@ -3,7 +3,7 @@ export interface IModal {
     title: string,
     children: JSX.Element | null,
     open: boolean,
-    params?:{}
+    params?: {}
 }
 
 export type ModalState = {
@@ -18,8 +18,8 @@ export type ModalAccion = {
 export type DispatchModal = (args: ModalAccion) => ModalAccion
 //auth
 interface userdata {
-    nameavatar?:string,
-    namelogo?:string,
+    nameavatar?: string,
+    namelogo?: string,
     email: string,
     password?: string,
     username?: string | undefined,
@@ -90,8 +90,8 @@ export interface ICarousel {
     title: string,
     name: string,
     nameImages: string,
-    text?:string,
-    key?:number
+    text?: string,
+    key?: number
 }
 
 export type CaouselState = {
@@ -99,6 +99,22 @@ export type CaouselState = {
 }
 
 export type CarouselAccion = {
-    type:string,
-    carousel:ICarousel[]
+    type: string,
+    carousel: ICarousel[]
+}
+//news
+export interface INews {
+    id?: string,
+    _id?: string
+    title: string
+    excerpt: string
+}
+
+export type NewState = {
+    news: INews[];
+}
+
+export type NewsAccion = {
+    type: string,
+    news: INews[]
 }

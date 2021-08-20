@@ -5,6 +5,7 @@ import {bannerReducer} from './reducerBanner';
 import {aboutReducer} from './reducerAbout';
 import {featureReducer} from './reducerFeature';
 import {carouselReducer} from './reducerCarousel'
+import {newsReducer} from './reducerNews'
 
 
 export default combineReducers({ 
@@ -13,5 +14,6 @@ export default combineReducers({
     bannerReducer,
     aboutReducer,
     featureReducer,
-    carouselReducer
+    carouselReducer,
+    newsReducer
  })
