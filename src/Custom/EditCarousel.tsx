@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useSelector, useDispatch } from 'react-redux';
-import { carouselStorage, openModal} from 'redux/accion/actionCreators'
+import { carouselStorage, openModal} from 'redux/accion/actionCreators';
 import { ICarousel } from 'redux/myTypes'
 import { toast } from 'react-toast'
 import { editCarousel } from 'api'

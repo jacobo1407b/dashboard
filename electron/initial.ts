@@ -64,7 +64,7 @@ export default class Main {
             maxWidth: 2048,
             maxHeight: 900,*/
             //resizable: false,
-            title: "Dashboard",
+            title: process.env.app || "Dashboard",
             titleBarStyle: "hiddenInset",
             webPreferences: {
                 nodeIntegration: true,

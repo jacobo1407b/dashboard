@@ -112,7 +112,7 @@ export async function deleteNew(id?: string): Promise<boolean> {
 export async function getGallery(): Promise<IGallery[]> {
     return await ma.default.getGallery();
 }
-export async function deleteGallery(id: string, nameimg: string): Promise<boolean> {
+export async function deleteGallery(id?: string, nameimg?: string): Promise<boolean> {
     return await ma.default.deleteGallery(id, nameimg);
 }
 export async function editGallery(
