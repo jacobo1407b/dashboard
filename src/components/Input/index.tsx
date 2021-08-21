@@ -14,6 +14,8 @@ interface InInput {
     ghost?: boolean,
     fluid?: boolean,
     buton?: JSX.Element | undefined
+    maxLength?:number,
+    size?:string
 }
 const Input: FunctionComponent<InInput> = ({
     placeholder,
@@ -28,8 +30,23 @@ const Input: FunctionComponent<InInput> = ({
     type,
     ghost,
     fluid,
-    buton
+    buton,
+    maxLength,
+    size
 }): JSX.Element => {
+
+    function sizesSet(){
+        switch (size) {
+            case 'large':
+                return "input-lg"
+            case "small":
+                return "input-sm"
+            case "tiny":
+                return "input-xs"
+            default:
+                return ""
+        }
+    }
     return (
         <div style={{ paddingBottom: "20px" }}>
             {label ? (
@@ -39,6 +56,7 @@ const Input: FunctionComponent<InInput> = ({
             ) : null}
             {!buton ? (
                 <input
+                    maxLength={maxLength}
                     value={value}
                     defaultValue={defalutValue}
                     name={name}
@@ -50,7 +68,8 @@ const Input: FunctionComponent<InInput> = ({
                 input 
                 ${fluid && "btn-block "}
                 ${bordered ? "input-bordered " : null} 
-                ${ghost && "input-ghost"}
+                ${ghost && "input-ghost "}
+                ${sizesSet()}
                 `}
                     disabled={disabled}
                 />

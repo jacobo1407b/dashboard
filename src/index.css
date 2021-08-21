@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.jacobo-over:hover{
+  cursor: pointer;
+}
 .click-about:hover{
   cursor: pointer;
 }

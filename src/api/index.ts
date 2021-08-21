@@ -2,7 +2,7 @@ import { authenticate, userdata } from 'typesreact'
 import { IFeature, ICarousel, INews } from 'redux/myTypes';
 //types
 import { IABout, AboutRequest, IBanner, BannerRequest } from 'typesreact'
-import { IGallery } from 'redux/myTypes';
+import { IGallery, IMsg } from 'redux/myTypes';
 const main = window.require("electron").remote;
 const ma = main.require("./initial");
 
@@ -132,4 +132,22 @@ export async function addGallery(
 
 export async function counMessages(): Promise<number> {
     return await ma.default.countMsg();
+}
+
+export async function getMsg(): Promise<IMsg[]> {
+    return await ma.default.getMsg();
+};
+
+export async function deleteMsg(id?: String): Promise<boolean> {
+    return await ma.default.deleteMsg(id);
+};
+
+type reqmsg = {
+    email: string,
+    text?: string,
+    date: number | Date,
+    read: boolean
+}
+export async function editMsg(data: reqmsg, id?: string): Promise<IMsg> {
+    return await ma.default.reading(data, id)
 }

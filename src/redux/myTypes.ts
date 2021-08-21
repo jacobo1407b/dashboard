@@ -119,18 +119,48 @@ export type NewsAccion = {
     news: INews[]
 }
 //gallery
-export interface IGallery{
-    _id?:string,
-    id?:string
-    url:string,
-    name:string,
-    nameImage:string
+export interface IGallery {
+    _id?: string,
+    id?: string
+    url: string,
+    name: string,
+    nameImage: string
 }
 
-export type GalleryState={
-    gallery:IGallery[];
+export type GalleryState = {
+    gallery: IGallery[]
 }
-export type GalleryAccion={
+export type GalleryAccion = {
+    type: string,
+    gallery: IGallery[]
+}
+//msg
+export interface IMsg {
+    id?:string,
+    _id?: string
+    email: string,
+    text: string,
+    date: number | Date,
+    read: boolean
+}
+
+export type MsgState = {
+    msg: IMsg[];
+}
+export type MsgAccion = {
+    type: string,
+    msg: IMsg[]
+};
+
+//bandeja
+/*
+export interface IBandeja {
+    bandeja:number
+}*/
+export type BandejaState = {
+    bandeja:number
+}
+export type BandejaAccion = {
     type:string,
-    gallery:IGallery[]
+    bandeja:number
 }

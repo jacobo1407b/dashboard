@@ -1,12 +1,17 @@
 import {FunctionComponent} from 'react'
 
 interface ITable {
-    children?:JSX.Element
+    children?:JSX.Element,
+    compact?:boolean
 }
-const Table: FunctionComponent <ITable> =({children}): JSX.Element => {
+//table-compact
+const Table: FunctionComponent <ITable> =({children,compact}): JSX.Element => {
     return (
         <div className="overflow-x-auto">
-            <table className="table w-full">
+            <table className={`
+            table w-full
+            ${compact && "table-compact"}
+            `}>
                 <thead>
                     <tr>
                         <th>

@@ -1,18 +1,17 @@
-import { useState,FunctionComponent } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { setItems } from 'utils'
-import { menuItems } from 'typesreact'
-import {useDispatch} from 'react-redux'
+import { setItems } from 'utils';
+import { menuItems } from 'typesreact';
+import {useDispatch, useSelector} from 'react-redux';
 import {userInitial} from 'redux/accion/actionCreators'
 import { logiut } from 'api'
 
-interface IMenu {
-    bandeja:number
-}
 
-const MenuLeft: FunctionComponent<IMenu> = ({bandeja}): JSX.Element => {
+const MenuLeft = (): JSX.Element => {
     const dispatch = useDispatch()
-    const itemsmenu = setItems(bandeja)
+
+    const bandejaReducer: any = useSelector<any>(state => state.bandejaReducer.bandeja)
+    const itemsmenu = setItems(bandejaReducer)
     const [btnOpen, setBtnOpen] = useState<string>("bx-menu");
     const [open, setopen] = useState<boolean>(false);
 

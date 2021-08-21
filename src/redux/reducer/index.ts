@@ -1,15 +1,17 @@
-import {combineReducers} from 'redux';
-import {modalReducer} from './reducerModal';
-import {userReducer} from './reducerUser';
-import {bannerReducer} from './reducerBanner';
-import {aboutReducer} from './reducerAbout';
-import {featureReducer} from './reducerFeature';
-import {carouselReducer} from './reducerCarousel'
-import {newsReducer} from './reducerNews';
-import {carouselGallery} from './reducerGallery';
+import { combineReducers } from 'redux';
+import { modalReducer } from './reducerModal';
+import { userReducer } from './reducerUser';
+import { bannerReducer } from './reducerBanner';
+import { aboutReducer } from './reducerAbout';
+import { featureReducer } from './reducerFeature';
+import { carouselReducer } from './reducerCarousel'
+import { newsReducer } from './reducerNews';
+import { carouselGallery } from './reducerGallery';
+import { msgReducer } from './reducerMsg';
+import { bandejaReducer } from './reducerBandeja';
 
 
-export default combineReducers({ 
+export default combineReducers({
     modalReducer,
     userReducer,
     bannerReducer,
@@ -17,5 +19,7 @@ export default combineReducers({
     featureReducer,
     carouselReducer,
     newsReducer,
-    carouselGallery
- })
+    carouselGallery,
+    msgReducer,
+    bandejaReducer
+})

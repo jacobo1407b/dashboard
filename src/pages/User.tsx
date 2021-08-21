@@ -1,16 +1,16 @@
 import { useEffect, useState, useCallback } from 'react';
 import { userPage } from 'config/titles';
-import { useDropzone } from 'react-dropzone'
+import { useDropzone } from 'react-dropzone';
 import { useSelector, useDispatch } from 'react-redux';
-import { userInitial } from 'redux/accion/actionCreators'
-import { updateUsername } from 'api'
-import { toast } from "react-toast"
-import { updateEmail as actualizarEmail, updatePassword } from 'api'
-import { updateAvatar, updateLogo } from 'api'
+import { userInitial } from 'redux/accion/actionCreators';
+import { updateUsername } from 'api';
+import { toast } from "react-toast";
+import { updateEmail as actualizarEmail, updatePassword } from 'api';
+import { updateAvatar, updateLogo } from 'api';
 import CachedIcon from '@material-ui/icons/Cached';
-import Imgloader from 'assets/loader.gif'
-import Card from "components/Card"
-import Input from "components/Input"
+import Imgloader from 'assets/loader.gif';
+import Card from "components/Card";
+import Input from "components/Input";
 import Grid from '@material-ui/core/Grid';
 import Avatar from "components/Avatar";
 import Button from "components/Button";

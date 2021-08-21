@@ -2,7 +2,7 @@ import * as actionTypes from '../acctionType';
 import { IModal, ModalAccion, UserAccion, IUser, IFeature, FeatureAccion } from '../myTypes';
 import { IBanner, BannerAccion, IABout, AboutAccion } from '../myTypes'
 import { ICarousel, CarouselAccion, INews, NewsAccion } from '../myTypes'
-import { IGallery, GalleryAccion } from '../myTypes'
+import { IGallery, GalleryAccion, MsgAccion, IMsg, BandejaAccion } from '../myTypes'
 export function openModal(modal: IModal): ModalAccion {
     const action: ModalAccion = {
         type: actionTypes.OPEN_MODAL,
@@ -67,4 +67,20 @@ export function galleryStorage(gallery: IGallery[]): GalleryAccion {
         gallery
     }
     return action
+}
+
+export function msgStorage(msg: IMsg[]): MsgAccion {
+    const action: MsgAccion = {
+        type: actionTypes.SET_MSG,
+        msg
+    }
+    return action;
+}
+
+export function globalBandeja(bandeja: number): BandejaAccion {
+    const action: BandejaAccion = {
+        type: actionTypes.BANDEJA,
+        bandeja
+    }
+    return action;
 }
