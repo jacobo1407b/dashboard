@@ -1,4 +1,5 @@
-import { BrowserWindow, session, dialog } from 'electron';
+import { BrowserWindow, session, dialog } from 'electron';;
+import { config } from './env';
 import * as dev from 'electron-is-dev';
 import * as path from 'path'
 import * as chalck from 'chalk';
@@ -18,7 +19,7 @@ import { idAbout, idBanner } from './utils/constantes';
 import { encryptPassword, matchPassword } from './utils/hash';
 import { Cookie, IABout, AboutRequest, IBanner, BannerRequest, ICarousel, IUser } from './types'
 import { CarouselReq, IFeature, IMsg, MsgReq, NewReq, INews, ISocial, socialReq } from './types'
-import {IGallery} from './types'
+import { IGallery } from './types'
 
 
 export default class Main {
@@ -30,9 +31,9 @@ export default class Main {
 
     private static setCloudinary() {
         Main.cloudStorage.config({
-            cloud_name: process.env.CLOUDINARY_NAME,
-            api_key: process.env.CLOUDINARY_API_KEY,
-            api_secret: process.env.CLOUDINARY_API_SECRET
+            cloud_name: config.CLOUDINARY_NAME,
+            api_key: config.CLOUDINARY_API_KEY,
+            api_secret: config.CLOUDINARY_API_SECRET
         })
     }
     private static onWindowAllClosed() {
@@ -41,12 +42,15 @@ export default class Main {
         }
     }
     private static onCloudinary() {
-        if (process.env.CLOUDINARY_NAME) {
+        if (config.CLOUDINARY_NAME) {
             Main.setCloudinary();
-            console.log(chalck.blue('INFO: ') + chalck.green(`cloudinary config loaded successfuly a cloud ${process.env.CLOUDINARY_NAME}`))
+            console.log(chalck.blue('INFO: ') + chalck.green(`cloudinary config loaded successfuly a cloud ${config.CLOUDINARY_NAME}`))
         } else {
             console.log(chalck.red('ERROR: ' + chalck.redBright('No configuration credentials found')))
         }
+    }
+    public static getTitleApp(): string {
+        return config.app
     }
     private static onClose() {
         // Dereference the window object. 
@@ -55,7 +59,7 @@ export default class Main {
 
     private static onReady() {
         require('dotenv').config()
-        Main.url = process.env.urldatabase;
+        Main.url = config.urldatabase;
         Main.mainWindow = new Main.BrowserWindow({
             width: 1270,
             height: 690,
@@ -64,7 +68,7 @@ export default class Main {
             maxWidth: 2048,
             maxHeight: 900,*/
             //resizable: false,
-            title: process.env.app || "Dashboard",
+            title:Main.getTitleApp(),
             titleBarStyle: "hiddenInset",
             webPreferences: {
                 nodeIntegration: true,
@@ -337,31 +341,31 @@ export default class Main {
     /**
      * Gallery
      */
-    public static async getGallery(): Promise<IGallery[]>{
+    public static async getGallery(): Promise<IGallery[]> {
         const result: IGallery[] = await Gallery.find();
         return result
     }
 
-    public static async editGallery(id:string,data:{url:string,name:string,nameImage:string},base64:string | null): Promise<IGallery>{
-        if(base64){
-            const result = await Main.cloudStorage.uploader.upload(base64,{ public_id:`gallery/${data.nameImage}`});
+    public static async editGallery(id: string, data: { url: string, name: string, nameImage: string }, base64: string | null): Promise<IGallery> {
+        if (base64) {
+            const result = await Main.cloudStorage.uploader.upload(base64, { public_id: `gallery/${data.nameImage}` });
             data.url = result.secure_url;
         }
-       return await Gallery.findByIdAndUpdate(id,data,{new:true});
+        return await Gallery.findByIdAndUpdate(id, data, { new: true });
     }
 
-    public static async addGallery(name:string,base64:string | null): Promise<IGallery>{
+    public static async addGallery(name: string, base64: string | null): Promise<IGallery> {
         const nameImageUploader = uuidv4();
-        const result = await Main.cloudStorage.uploader.upload(base64,{public_id:`gallery/${nameImageUploader}`})
+        const result = await Main.cloudStorage.uploader.upload(base64, { public_id: `gallery/${nameImageUploader}` })
         const gallery = new Gallery({
             name,
-            nameImage:nameImageUploader,
-            url:result.secure_url
+            nameImage: nameImageUploader,
+            url: result.secure_url
         });
         return await gallery.save();
     }
 
-    public static async deleteGallery(id:string,nameImage:string):  Promise<boolean>{
+    public static async deleteGallery(id: string, nameImage: string): Promise<boolean> {
         await Main.cloudStorage.uploader.destroy(`gallery/${nameImage}`);
         await Gallery.findByIdAndDelete(id);
         return true

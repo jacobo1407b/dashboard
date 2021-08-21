@@ -11,6 +11,9 @@ interface Ilogin {
     msg: string,
     user: {}
 }
+export function getTitlesApp():string{
+    return ma.default.getTitleApp()
+}
 export async function isAuthenticate(): Promise<authenticate> {
     //login('test@test.com','1234567890')
     return await ma.default.isAuthenticate()

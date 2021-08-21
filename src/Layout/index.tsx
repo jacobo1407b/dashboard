@@ -1,96 +1,15 @@
-import { useState, useEffect } from 'react'
-import { counMessages, getBanner, getABout, getCarousel } from 'api'
-import { getFeature, getNews, getGallery, getMsg } from 'api';
-import { useDispatch } from 'react-redux';
-import { IFeature, ICarousel, INews, IGallery, IMsg } from 'redux/myTypes'
-import { bannerStorage, aboutStorage, featureStorage, newsStorage, galleryStorage, msgStorage,globalBandeja } from 'redux/accion/actionCreators'
-import { carouselStorage } from 'redux/accion/actionCreators'
+import { useState } from 'react'
 import MenuLeft from "components/Menuleft"
 import Button from "components/Button"
 import MenuCustom from "Custom/MenuCustom"
 import Routes from "routes"
+import useLoaders from 'config/useLoader'
 
 //bandejaReducer
 const Layout = (): JSX.Element => {
-    const dispatch = useDispatch()
 
     const [open, setOpen] = useState(false);
-
-
-    useEffect(() => {
-        (async () => {
-            const bann = await getBanner()
-            const { url, text, text2, title, nameImage } = await getABout();
-            dispatch(aboutStorage({ url, text, text2, title, nameImage }));
-            dispatch(bannerStorage({ discount: bann.discount, label: bann.label, title: bann.title, text: bann.text }));
-            dispatch(globalBandeja(await counMessages()))
-        })()
-    }, [dispatch]);
-
-    useEffect(() => {
-        (async () => {
-            const featureArray: IFeature[] = []
-            const ticho = await getFeature();
-            ticho.map((values: any) => {
-                const { id, title, icon, description } = values
-                featureArray.push({ _id: id, title, icon, description });
-                return true
-            })
-            dispatch(featureStorage(featureArray))
-        })()
-    }, [dispatch]);
-
-    useEffect(() => {
-        (async () => {
-            const arrayCarousel: ICarousel[] = [];
-            const carousel = await getCarousel();
-            carousel.map((poste: any) => {
-                const { id, title, url, name, nameImages } = poste
-                arrayCarousel.push({ _id: id, title, url, name, nameImages })
-                return arrayCarousel
-            })
-            dispatch(carouselStorage(arrayCarousel))
-        })()
-    }, [dispatch]);
-
-    useEffect(() => {
-        (async () => {
-            const arraynews: INews[] = [];
-            const news = await getNews();
-            news.map((values) => {
-                const { id, title, excerpt } = values
-                arraynews.push({ _id: id, title, excerpt });
-                return arraynews
-            })
-            dispatch(newsStorage(arraynews));
-        })()
-    }, [dispatch]);
-
-    useEffect(() => {
-        (async () => {
-            const arraygallery: IGallery[] = [];
-            const gallery = await getGallery()
-            gallery.map((val) => {
-                const { id, url, name, nameImage } = val;
-                arraygallery.push({ _id: id, url, name, nameImage });
-                return arraygallery
-            })
-            dispatch(galleryStorage(arraygallery));
-        })()
-    }, [dispatch]);
-
-    useEffect(() => {
-        (async () => {
-            const tempArrayMsg: IMsg[] = [];
-            const resmsg = await getMsg()
-            resmsg.map((val) => {
-                const { id, text, read, email, date } = val
-                tempArrayMsg.push({ _id: id, text, read, email, date });
-                return tempArrayMsg
-            });
-            dispatch(msgStorage(tempArrayMsg));
-        })()
-    }, [dispatch]);
+    useLoaders();
 
     return (
         <div>

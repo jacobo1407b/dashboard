@@ -35,18 +35,18 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "full": "yarn build:electron && yarn electron-pack",
-    "dev": "concurrently \"yarn dev:watch\" \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\" ",
+    "full": "yarn export-env && yarn build:electron && yarn electron-pack",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "preelectron-pack": "yarn build",
+    "export-env":"node export-env.js",
     "nodemon": "electron .",
     "build:electron": "tsc --project tsconfig.electron.json",
-    "dev:watch": "tsc --project tsconfig.electron.json --watch",
+    "build:electron:watch": "tsc --project tsconfig.electron.json --watch",
     "electron-pack": "electron-builder -c.extraMetadata.main=build/electron/electron.js",
-    "electron-dev": "concurrently  \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
+    "electron-dev": "yarn export-env && yarn build:electron && concurrently  \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
     "extends": [

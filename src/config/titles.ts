@@ -1,4 +1,6 @@
-const basetitle: string = "Dashboard - "; //cambiar por nombre de la aplicacion
+import {getTitlesApp} from 'api';
+
+const basetitle: string = `${getTitlesApp()} - `; //cambiar por nombre de la aplicacion
 export const homePage: string = `${basetitle}dashboard`;
 export const userPage: string = `${basetitle}configuración de usuario`;
 export const mesgPage: string = `${basetitle}bandeja de mensajes`;

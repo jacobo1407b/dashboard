@@ -28,8 +28,8 @@ const Messages = (): JSX.Element => {
     const [longitud, setlongitud] = useState<number>(arrayMsg.length);
 
     useEffect(() => {
-        document.title = mesgPage
-    }, []);
+        document.title = `${mesgPage} (${bandejaReducer}) nuevos`
+    }, [bandejaReducer]);
 
 
     function responseEmail(email: string) {
