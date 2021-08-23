@@ -1,11 +1,52 @@
 import { FunctionComponent } from 'react'
 import { menuItems } from 'typesreact';
-import Badge from '@material-ui/core/Badge'
-
+import Badge from '@material-ui/core/Badge';
 
 interface Bandeja {
     bandeja: number
 }
+
+type optionValue = {
+    id: number | string,
+    value: string,
+    text: string | JSX.Element
+}
+/**
+ * rutas
+ */
+//export const mainRouter: string = "/";
+export const msgRouter: string = '/messages';
+export const banerRouter: string = "/banner";
+export const galleryRouter: string = "/gallery";
+export const newsRouter: string = "/news";
+export const profileRouter: string = "/";
+const senttingRouter: string = "/settings";
+export const aboutRouter: string = `${senttingRouter}/about`;
+export const featureRouter: string = `${senttingRouter}/features`;
+export const carouselRouter: string = `${senttingRouter}/carousel`;
+export const socialRoutes: string = `${senttingRouter}/social`
+
+export const options: optionValue[] = [
+    {
+        id: 1,
+        value: "twitter",
+        text: "Twitter"
+    },
+    {
+        id: 2,
+        value: "facebook",
+        text: "Facebook"
+    },
+    {
+        id: 3,
+        value: "instagram",
+        text: "Instagram"
+    },
+]
+
+
+
+
 const Mesage: FunctionComponent<Bandeja> = ({ bandeja }) => {
 
     return (
@@ -16,15 +57,15 @@ const Mesage: FunctionComponent<Bandeja> = ({ bandeja }) => {
 }
 export function setItems(bandeja: number): menuItems[] {
     const itemsmenu: menuItems[] = [
-        {
+        /*{
             id: 1,
             to: "/",
             icon: <i className='bx bx-grid-alt' />,
             title: "Dashboard"
-        },
+        },*/
         {
             id: 2,
-            to: "/profile",
+            to: "/",
             icon: <i className='bx bx-user' />,
             title: "Perfil"
         },
@@ -64,7 +105,7 @@ const arrayMes = [
     "Nov",
     "Dec"
 ];
-function getParseHour(minut: number,hour:number): string{
+function getParseHour(minut: number, hour: number): string {
     const arrayHour = [
         `12:${minut} am`,
         `1:${minut} am`,
@@ -94,20 +135,6 @@ function getParseHour(minut: number,hour:number): string{
     return arrayHour[hour];
 }
 
-
-/**
- * rutas
- */
-export const mainRouter: string = "/";
-export const msgRouter: string = '/messages';
-export const banerRouter: string = "/banner";
-export const galleryRouter: string = "/gallery";
-export const newsRouter: string = "/news";
-export const profileRouter: string = "/profile";
-const senttingRouter: string = "/settings";
-export const aboutRouter: string = `${senttingRouter}/about`;
-export const featureRouter: string = `${senttingRouter}/features`;
-export const carouselRouter: string = `${senttingRouter}/carousel`;
 
 export function getFecha(date: Date | number): string {
     var parseFecha = new Date(date);

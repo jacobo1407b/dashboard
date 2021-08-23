@@ -373,7 +373,13 @@ export default class Main {
     /**
      * social
      */
-
+    /*
+    private static async registeoscial(){
+        const social = new Social({
+            icon:"",
+            link:""
+        })
+    };*/
     public static async getSocial(): Promise<ISocial[]> {
         const getall: ISocial[] = await Social.find();
         return getall;
@@ -397,3 +403,5 @@ export default class Main {
 
     }
 }
+
+//socialReducer

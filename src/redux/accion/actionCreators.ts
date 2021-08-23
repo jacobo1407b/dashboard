@@ -1,7 +1,7 @@
 import * as actionTypes from '../acctionType';
 import { IModal, ModalAccion, UserAccion, IUser, IFeature, FeatureAccion } from '../myTypes';
 import { IBanner, BannerAccion, IABout, AboutAccion } from '../myTypes'
-import { ICarousel, CarouselAccion, INews, NewsAccion } from '../myTypes'
+import { ICarousel, CarouselAccion, INews, NewsAccion,ISocial,SocialAccion} from '../myTypes'
 import { IGallery, GalleryAccion, MsgAccion, IMsg, BandejaAccion } from '../myTypes'
 export function openModal(modal: IModal): ModalAccion {
     const action: ModalAccion = {
@@ -82,5 +82,14 @@ export function globalBandeja(bandeja: number): BandejaAccion {
         type: actionTypes.BANDEJA,
         bandeja
     }
+    return action;
+}
+
+export function socialStorage(social:ISocial[]): SocialAccion{
+    const action: SocialAccion = {
+        type:actionTypes.SET_SOCIAL,
+        social
+    }
+
     return action;
 }

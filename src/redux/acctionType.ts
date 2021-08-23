@@ -7,5 +7,5 @@ export const SET_CAROUSEL: string = "SET_CAROUSEL";
 export const SET_NEWS: string = "SET_NEWS";
 export const SET_GALLERY: string = "SET_GALLERY";
 export const SET_MSG: string = "SET_MSG";
-
+export const SET_SOCIAL: string = "SET_SOCIAL";
 export const BANDEJA: string = "BANDEJA";

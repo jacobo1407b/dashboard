@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { counMessages, getBanner, getABout, getCarousel } from 'api'
-import { getFeature, getNews, getGallery, getMsg } from 'api';
+import { getFeature, getNews, getGallery, getMsg,getSocial } from 'api';
 import { useDispatch } from 'react-redux';
-import { IFeature, ICarousel, INews, IGallery, IMsg } from 'redux/myTypes'
-import { bannerStorage, aboutStorage, featureStorage, newsStorage, galleryStorage, msgStorage,globalBandeja } from 'redux/accion/actionCreators'
+import { IFeature, ICarousel, INews, IGallery, IMsg,ISocial} from 'redux/myTypes'
+import { bannerStorage, aboutStorage, featureStorage, newsStorage, galleryStorage, msgStorage,globalBandeja,socialStorage } from 'redux/accion/actionCreators'
 import { carouselStorage } from 'redux/accion/actionCreators'
 
 
@@ -20,6 +20,7 @@ const useLoader = ()=>{
             const arraynews: INews[] = [];
             const arraygallery: IGallery[] = [];
             const tempArrayMsg: IMsg[] = [];
+            const temArraySocial: ISocial[] = []
 
             const bann = await getBanner()
             const ticho = await getFeature();
@@ -27,6 +28,7 @@ const useLoader = ()=>{
             const news = await getNews();
             const gallery = await getGallery();
             const resmsg = await getMsg()
+            const social = await getSocial();
 
             const { url, text, text2, title, nameImage } = await getABout();
 
@@ -56,6 +58,12 @@ const useLoader = ()=>{
                 return tempArrayMsg
             });
 
+            social.map((values)=>{
+                const {id,icon,link} = values;
+                temArraySocial.push({_id:id,link,icon});
+                return temArraySocial;
+            })
+
             
             
             dispatch(aboutStorage({ url, text, text2, title, nameImage }));
@@ -65,6 +73,7 @@ const useLoader = ()=>{
             dispatch(newsStorage(arraynews));
             dispatch(galleryStorage(arraygallery));
             dispatch(msgStorage(tempArrayMsg));
+            dispatch(socialStorage(temArraySocial));
             dispatch(globalBandeja(await counMessages()))
         })()
     }, [dispatch]);

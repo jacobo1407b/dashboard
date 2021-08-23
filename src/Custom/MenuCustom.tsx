@@ -1,13 +1,14 @@
 import { FunctionComponent } from 'react';
-import { aboutRouter, featureRouter, carouselRouter,banerRouter } from 'utils'
+import { aboutRouter, featureRouter, carouselRouter,banerRouter, socialRoutes } from 'utils'
 import Menuitem from "components/Menuitem"
 import Menu from "components/Menu"
 import AppsIcon from '@material-ui/icons/Apps';
 import ApartmentIcon from '@material-ui/icons/Apartment';
 import ImageIcon from '@material-ui/icons/Image';
 import PaletteIcon from '@material-ui/icons/Palette';
-import Badge from '@material-ui/core/Badge'
-import IconButton from '@material-ui/core/IconButton'
+import Badge from '@material-ui/core/Badge';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom'
 interface IMenucustom {
     setOpen: any
@@ -66,6 +67,18 @@ const MenuCustom: FunctionComponent<IMenucustom> = ({ setOpen }) => {
                                 </Badge>
                             </IconButton>
                             Carousel
+                        </Link>
+                    </>
+                </Menuitem>
+                <Menuitem onClick={onClick}>
+                    <>
+                        <Link to={socialRoutes}>
+                            <IconButton color="inherit" onClick={onClick}>
+                                <Badge color="secondary">
+                                    <FacebookIcon />
+                                </Badge>
+                            </IconButton>
+                            Social
                         </Link>
                     </>
                 </Menuitem>

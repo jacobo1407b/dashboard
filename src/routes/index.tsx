@@ -1,26 +1,27 @@
 import {Switch,Route} from 'react-router-dom'
 import Container from '@material-ui/core/Container';
-import {mainRouter,msgRouter,banerRouter} from 'utils';
-import {galleryRouter,newsRouter,profileRouter} from 'utils'
+import {msgRouter,banerRouter} from 'utils';
+import {galleryRouter,newsRouter,profileRouter,socialRoutes} from 'utils'
 import {aboutRouter,featureRouter,carouselRouter} from 'utils'
 import {routerType} from 'typesreact';
 import Banner from 'pages/settings/Banner';
 import About from 'pages/settings/About';
 import CarouselMain from 'pages/settings/CarouselMain';
 import Features from 'pages/settings/Features';
-import Home from "pages/Home";
+//import Home from "pages/Home";
 import Messages from "pages/Messages";
 import Gallery from 'pages/Gallery';
 import News from 'pages/News';
 import User from 'pages/User';
+import Social from 'pages/Social';
 
 const routerMap: routerType[] = [
-    {
+    /*{
         id:1,
         path:mainRouter,
         exact:true,
         components:<Home/>
-    },
+    },*/
     {
         id:2,
         path:msgRouter,
@@ -64,11 +65,17 @@ const routerMap: routerType[] = [
         components:<Features/>
     },
     {
-        id:8,
+        id:9,
         path:carouselRouter,
         exact:true,
         components:<CarouselMain/>
     },
+    {
+        id:10,
+        path:socialRoutes,
+        exact:true,
+        components:<Social/>
+    }
 ]
 
 const Routes = ():JSX.Element=>{

@@ -2,7 +2,7 @@ import { authenticate, userdata } from 'typesreact'
 import { IFeature, ICarousel, INews } from 'redux/myTypes';
 //types
 import { IABout, AboutRequest, IBanner, BannerRequest } from 'typesreact'
-import { IGallery, IMsg } from 'redux/myTypes';
+import { IGallery, IMsg, ISocial} from 'redux/myTypes';
 const main = window.require("electron").remote;
 const ma = main.require("./initial");
 
@@ -153,4 +153,16 @@ type reqmsg = {
 }
 export async function editMsg(data: reqmsg, id?: string): Promise<IMsg> {
     return await ma.default.reading(data, id)
+}
+//social
+
+export async function getSocial(): Promise<ISocial[]>{
+    return ma.default.getSocial()
+}
+type reqsocial = {
+    icon:string,
+    link:string
+}
+export async function editSocial(id?:string,data?:reqsocial): Promise<ISocial>{
+    return ma.default.editSocial(id,data)
 }

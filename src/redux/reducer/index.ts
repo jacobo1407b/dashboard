@@ -9,6 +9,7 @@ import { newsReducer } from './reducerNews';
 import { carouselGallery } from './reducerGallery';
 import { msgReducer } from './reducerMsg';
 import { bandejaReducer } from './reducerBandeja';
+import { socialReducer } from './reducerSocial'
 
 
 export default combineReducers({
@@ -21,5 +22,6 @@ export default combineReducers({
     newsReducer,
     carouselGallery,
     msgReducer,
-    bandejaReducer
+    bandejaReducer,
+    socialReducer
 })

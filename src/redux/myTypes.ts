@@ -153,14 +153,26 @@ export type MsgAccion = {
 };
 
 //bandeja
-/*
-export interface IBandeja {
-    bandeja:number
-}*/
+
 export type BandejaState = {
     bandeja:number
 }
 export type BandejaAccion = {
     type:string,
     bandeja:number
+}
+//social
+export interface ISocial{
+    _id?:string,
+    id?:string,
+    icon:string,
+    link:string
+}
+
+export type SocialState = {
+    social:ISocial[]
+}
+export type SocialAccion = {
+    type:String,
+    social:ISocial[]
 }
