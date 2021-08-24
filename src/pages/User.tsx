@@ -19,7 +19,7 @@ import BtnInput from 'components/Input/BtnInput';
 const User = (): JSX.Element => {
     const dispatch = useDispatch()
 
-    const user: any = useSelector<any>(state => state.userReducer.user)
+    const user: any = useSelector<any>(state => state.userReducer.user);
     const [loadUsername, setloadUsername] = useState<boolean>(false);
     const [loadEmail, setLoadEmail] = useState<boolean>(false);
     const [loadPassword, setloadPassword] = useState<boolean>(false)

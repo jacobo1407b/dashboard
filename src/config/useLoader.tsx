@@ -14,7 +14,6 @@ const useLoader = ()=>{
 
     useEffect(() => {
         (async () => {
-
             const featureArray: IFeature[] = []
             const arrayCarousel: ICarousel[] = [];
             const arraynews: INews[] = [];
@@ -77,9 +76,9 @@ const useLoader = ()=>{
             dispatch(globalBandeja(await counMessages()))
             setLoad(false)
         })()
-    }, [dispatch]);
+    }, [dispatch,load]);
 
-    return {load}
+    return {load,setLoad}
 }
 
 export default useLoader;

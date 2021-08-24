@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { setItems } from 'utils';
 import { menuItems } from 'typesreact';
-import {useDispatch, useSelector} from 'react-redux';
-import {userInitial} from 'redux/accion/actionCreators'
+import { useDispatch, useSelector } from 'react-redux';
+import { userInitial } from 'redux/accion/actionCreators';
 import { logiut } from 'api'
 
 
@@ -29,11 +29,13 @@ const MenuLeft = (): JSX.Element => {
         }
     }
 
+    
+
     async function isLogout() {
         await logiut()
         dispatch(userInitial({
-            autenticate:false,
-            user:null
+            autenticate: false,
+            user: null
         }))
     }
     return (
