@@ -1,9 +1,29 @@
-const { writeFileSync } = require('fs')
+const { writeFileSync, accessSync } = require('fs')
 const chalk = require('chalk')
 
 require('dotenv').config()
 
-if (!process.env.app) {
+function fileExists(path) {
+  try {
+    if(accessSync(path)) {
+      return{
+        error:false,
+        e:'FILE ENV EXIST'
+      }
+    }
+  } catch (e) {
+    return {
+      error:true,
+      e:e
+    }
+  }
+}
+
+const result = fileExists('.env')
+if(result?.error){
+  console.log(chalk.red('Error: ENOENT: no such file or directory'))
+  throw result.e
+}else if (!process.env.app) {
   console.log(chalk.red('Reference error: Cannot export environment variables'));
   console.log(chalk.redBright('".env" file found'))
   throw `".env" file found`

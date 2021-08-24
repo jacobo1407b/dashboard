@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect,useState } from 'react'
 import { counMessages, getBanner, getABout, getCarousel } from 'api'
 import { getFeature, getNews, getGallery, getMsg,getSocial } from 'api';
 import { useDispatch } from 'react-redux';
@@ -9,7 +9,7 @@ import { carouselStorage } from 'redux/accion/actionCreators'
 
 const useLoader = ()=>{
     const dispatch = useDispatch()
-
+    const [load, setLoad] = useState(true);
 
 
     useEffect(() => {
@@ -75,10 +75,11 @@ const useLoader = ()=>{
             dispatch(msgStorage(tempArrayMsg));
             dispatch(socialStorage(temArraySocial));
             dispatch(globalBandeja(await counMessages()))
+            setLoad(false)
         })()
     }, [dispatch]);
 
-    return null
+    return {load}
 }
 
 export default useLoader;

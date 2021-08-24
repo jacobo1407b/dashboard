@@ -13,8 +13,13 @@ import Button from 'components/Button';
 
 
 const Login = (): JSX.Element => {
-    const [formData, setFormData] = useState<dataLogin>({ email: "", password: "" });
+    const getStorageEmail: any = localStorage.getItem('email');
+    const getStoragePassword: any = localStorage.getItem('password');
+
+    
+    const [formData, setFormData] = useState<dataLogin>({ email: getStorageEmail, password: getStoragePassword });
     const [loading, setloading] = useState<boolean>(false);
+    const [defaultData] = useState<any>({ email: getStorageEmail, password: getStoragePassword });
 
     const dispatch = useDispatch()
 
@@ -40,6 +45,8 @@ const Login = (): JSX.Element => {
                 if (!res.login) {
                     toast.error(res.msg)
                 } else {
+                    localStorage.setItem('email', formData.email);
+                    localStorage.setItem('password', formData.password);
                     dispatch(userInitial({
                         autenticate: res.login,
                         user: {
@@ -75,11 +82,13 @@ const Login = (): JSX.Element => {
                                     <Input
                                         label="Email"
                                         placeholder="example@example.com"
+                                        defalutValue={defaultData.email}
                                         name="email"
                                     />
                                     <Input
                                         label="Password"
                                         placeholder="**********"
+                                        defalutValue={defaultData.password}
                                         type="password"
                                         name="password"
                                     />

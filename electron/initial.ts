@@ -70,6 +70,7 @@ export default class Main {
             //resizable: false,
             title:Main.getTitleApp(),
             titleBarStyle: "hiddenInset",
+            icon:__dirname + "/favicon.png",
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true,

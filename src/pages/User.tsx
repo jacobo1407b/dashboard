@@ -132,10 +132,12 @@ const User = (): JSX.Element => {
         if (!formUser.password) {
             toast.warn('Ingresa una contraseña')
         } else {
+
             setloadPassword(true)
             updatePassword(formUser._id, formUser.password).then((res) => {
                 setloadPassword(false)
                 if (res) {
+                    localStorage.setItem('password', formUser.password);
                     toast('Contraseña actualizada')
                 } else {
                     toast.error('Error al actualizar contraseña')
@@ -150,7 +152,7 @@ const User = (): JSX.Element => {
             setLoadEmail(true)
             actualizarEmail(formUser._id, formUser.email).then((res) => {
                 setLoadEmail(false);
-
+                localStorage.setItem('email', formUser.email);
                 dispatch(userInitial({
                     autenticate: true,
                     user: {

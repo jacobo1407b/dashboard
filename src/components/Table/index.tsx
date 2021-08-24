@@ -1,11 +1,13 @@
 import {FunctionComponent} from 'react'
 
+
 interface ITable {
     children?:JSX.Element,
     compact?:boolean
 }
 //table-compact
 const Table: FunctionComponent <ITable> =({children,compact}): JSX.Element => {
+
     return (
         <div className="overflow-x-auto">
             <table className={`
@@ -28,7 +30,9 @@ const Table: FunctionComponent <ITable> =({children,compact}): JSX.Element => {
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>Paginacion</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </tfoot>
             </table>
