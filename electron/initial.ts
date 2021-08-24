@@ -1,5 +1,6 @@
 import { BrowserWindow, session, dialog } from 'electron';;
 import { config } from './env';
+//import {join} from 'path';
 import * as dev from 'electron-is-dev';
 import * as path from 'path'
 import * as chalck from 'chalk';
@@ -24,7 +25,8 @@ import { IGallery } from './types'
 
 export default class Main {
     private static url: string = "";
-    private static cloudStorage = cloudinary
+    private static cloudStorage = cloudinary;
+    private static icoPat: string = dev? __dirname + "/logo192.png":__dirname + "/favicon.png";
     static mainWindow: Electron.BrowserWindow;
     static application: Electron.App;
     static BrowserWindow;
@@ -70,7 +72,7 @@ export default class Main {
             //resizable: false,
             title:Main.getTitleApp(),
             titleBarStyle: "hiddenInset",
-            icon:__dirname + "/favicon.png",
+            icon: Main.icoPat,
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true,

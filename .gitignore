@@ -14,7 +14,16 @@
 # production
 /build
 /dist
-/public/electron
+/public/electron/models
+/public/electron/types
+/public/electron/utils
+/public/electron/electron.js
+/public/electron/electron.js.map
+/public/electron/env.js
+/public/electron/env.js.map
+/public/electron/favicon.png
+/public/electron/initial.js
+/public/electron/initial.js.map
 # misc
 .DS_Store
 .env.local
